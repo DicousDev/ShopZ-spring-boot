@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shopz.entities.Produto;
 import com.shopz.services.ProdutoService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
-@RequestMapping(value = "/camisetas")
+@RequestMapping("/camisetas")
+@Api(value = "Camisetas EndPoint API")
 public class ProdutoController {
 
 	@Autowired
 	private ProdutoService service;
 	
+	@ApiOperation(value = "Mostra lista de camisetas")
 	@GetMapping
 	public List<Produto> findProdutosAll() {
 		return service.findProdutosAll();
