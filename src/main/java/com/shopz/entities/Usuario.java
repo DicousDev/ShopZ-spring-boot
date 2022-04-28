@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.shopz.dto.CreateUsuarioRequest;
 
@@ -19,7 +22,9 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@CPF
 	private String cpf;
+	@Email
 	private String email;
 	private String password;
 	
