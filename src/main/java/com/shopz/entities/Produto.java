@@ -16,10 +16,6 @@ public class Produto {
 	private String titulo;
 	private Double precoAtual;
 	private Double parcelas;
-	
-	public Produto() {
-		
-	}
 
 	public String getTitulo() {
 		return titulo;

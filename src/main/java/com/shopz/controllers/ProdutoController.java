@@ -14,14 +14,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/camisetas")
-@Api(value = "Camisetas EndPoint API")
+@RequestMapping("/produtos")
+@Api(value = "Produtos EndPoint API")
 public class ProdutoController {
 
 	@Autowired
 	private ProdutoService service;
 	
-	@ApiOperation(value = "Mostra lista de camisetas")
+	@ApiOperation(value = "Mostra lista de produtos")
 	@GetMapping
 	public List<Produto> findProdutosAll() {
 		return service.findProdutosAll();
