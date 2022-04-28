@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.shopz.dto.JwtRequest;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -39,5 +40,28 @@ public class JwtService {
 				.setExpiration(date)
 				.signWith(SignatureAlgorithm.HS512, secretKey)
 				.compact();
+	}
+	
+	public Boolean isTokenValid(String token) {
+		try {
+			Claims claims = getClaims(token);
+			Date expiration = claims.getExpiration();
+			LocalDateTime expirationDate = expiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			return !LocalDateTime.now().isAfter(expirationDate);
+		}
+		catch(Exception e) {
+			return false;
+		}
+	}
+	
+	public String objetLoginUsuario(String token) {
+		return (String) getClaims(token).getSubject();
+	}
+	
+	private Claims getClaims(String token) {
+		return Jwts.parser()
+				.setSigningKey(secretKey)
+				.parseClaimsJws(token)
+				.getBody();
 	}
 }
