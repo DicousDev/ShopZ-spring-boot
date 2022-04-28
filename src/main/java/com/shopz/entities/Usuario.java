@@ -22,8 +22,10 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@CPF
 	private String cpf;
+	
 	@Email
 	private String email;
 	private String password;
