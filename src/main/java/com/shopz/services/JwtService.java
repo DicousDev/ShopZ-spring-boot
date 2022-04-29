@@ -61,7 +61,7 @@ public class JwtService {
 	}
 	
 	public Long getIdDoUsuarioLogado(String token) {
-		return Long.parseLong(getClaims(token).get("usuarioId").toString());
+		return Long.parseLong(getClaim(token, "usuarioId"));
 	}
 	
 	public String getTokenRequest(HttpServletRequest request) {
@@ -76,6 +76,10 @@ public class JwtService {
 		}
 		
 		throw new RuntimeException("Token inválido!");
+	}
+	
+	private String getClaim(String token, String key) {
+		return getClaims(token).get(key).toString();
 	}
 	
 	private Claims getClaims(String token) {
