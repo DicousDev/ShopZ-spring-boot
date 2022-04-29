@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeHttpRequests()
 			.antMatchers("/authenticate/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
-			.antMatchers("/produtos").permitAll()
+			.antMatchers("/produtos/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.sessionManagement()

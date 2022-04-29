@@ -46,6 +46,10 @@ public class Usuario {
 		this.password = usuario.getPassword();
 	}
 	
+	public void insertProduto(Produto produto) {
+		produtos.add(produto);
+	}
+	
 	public Long getId() {
 		return id;
 	}
