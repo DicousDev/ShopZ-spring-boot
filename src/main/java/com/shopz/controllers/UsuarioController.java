@@ -18,7 +18,7 @@ public class UsuarioController {
 	private UsuarioService service;
 	
 	@GetMapping
-	public Usuario findUsuarioById(HttpServletRequest request) {
+	public Usuario getUsuarioLogado(HttpServletRequest request) {
 		return service.getUsuarioLogado(request);
 	}
 }
