@@ -18,17 +18,8 @@ public class UsuarioService {
 	private JwtService jwtService;
 
 	public Usuario getUsuarioLogado(HttpServletRequest request) {
-		String authorization = request.getHeader("Authorization");
-		
-		if(authorization != null && authorization.startsWith("Bearer")) {
-			String token = authorization.split(" ")[1];
-			
-			if(jwtService.isTokenValid(token)) {
-				Long id = Long.parseLong(jwtService.getClaims(token).get("usuarioId").toString());
-				return repository.findById(id).get();
-			}
-		}
-		
-		return null;
+		String token = jwtService.getTokenRequest(request);
+		Long idUsuario = jwtService.getIdDoUsuarioLogado(token);
+		return repository.findById(idUsuario).get();
 	}
 }

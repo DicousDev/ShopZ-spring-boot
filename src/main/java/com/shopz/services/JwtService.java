@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +60,25 @@ public class JwtService {
 		return (String) getClaims(token).getSubject();
 	}
 	
-	public Claims getClaims(String token) {
+	public Long getIdDoUsuarioLogado(String token) {
+		return Long.parseLong(getClaims(token).get("usuarioId").toString());
+	}
+	
+	public String getTokenRequest(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+		
+		if(authorization != null && authorization.startsWith("Bearer")) {
+			String token = authorization.split(" ")[1];
+			
+			if(isTokenValid(token)) {
+				return token;
+			}
+		}
+		
+		throw new RuntimeException("Token inválido!");
+	}
+	
+	private Claims getClaims(String token) {
 		return Jwts.parser()
 				.setSigningKey(secretKey)
 				.parseClaimsJws(token)
