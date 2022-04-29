@@ -32,7 +32,7 @@ public class JwtService {
 		Date date = Date.from(instant);
 		
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("Email", user.getEmail());
+		claims.put("usuarioId", user.getId());
 		
 		return Jwts.builder()
 				.setClaims(claims)
@@ -58,7 +58,7 @@ public class JwtService {
 		return (String) getClaims(token).getSubject();
 	}
 	
-	private Claims getClaims(String token) {
+	public Claims getClaims(String token) {
 		return Jwts.parser()
 				.setSigningKey(secretKey)
 				.parseClaimsJws(token)

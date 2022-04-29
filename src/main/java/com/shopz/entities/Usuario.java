@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.shopz.dto.CreateUsuarioRequest;
@@ -31,6 +33,7 @@ public class Usuario {
 	private String password;
 	
 	@ManyToMany
+	@Fetch(FetchMode.JOIN)
 	private List<Produto> produtos = new ArrayList<>();
 	
 	public Usuario() {
@@ -41,6 +44,10 @@ public class Usuario {
 		this.cpf = usuario.getCpf();
 		this.email = usuario.getEmail();
 		this.password = usuario.getPassword();
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 	public String getCpf() {
@@ -53,5 +60,9 @@ public class Usuario {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 }

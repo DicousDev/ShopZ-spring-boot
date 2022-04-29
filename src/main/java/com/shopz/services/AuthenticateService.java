@@ -52,6 +52,7 @@ public class AuthenticateService implements UserDetailsService {
 		}
 		
 		Usuario usuario = repository.findByEmail(request.getEmail());
+		request.setId(usuario.getId());
 		String token = jwtService.generateToken(request);
 		return new JwtResponse(usuario.getCpf(), usuario.getEmail(), usuario.getPassword(), token);
 	}
