@@ -2,6 +2,7 @@ package com.shopz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,14 @@ public class AuthenticateController {
 	
 	@ApiOperation("Login de usuário")
 	@PostMapping
-	public JwtResponse login(@RequestBody JwtRequest request) {
-		return service.authenticate(request);
+	public ResponseEntity<?> login(@RequestBody JwtRequest request) {
+		
+		try {
+			JwtResponse response = service.authenticate(request);
+			return ResponseEntity.status(HttpStatus.OK).body(response);					
+		}
+		catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		}
 	}
 }

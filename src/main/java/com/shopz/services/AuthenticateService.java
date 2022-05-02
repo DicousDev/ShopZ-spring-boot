@@ -44,12 +44,17 @@ public class AuthenticateService implements UserDetailsService {
 	}
 	
 	public JwtResponse authenticate(JwtRequest request) {
+		
+		Usuario usuario = repository.findByEmail(request.getEmail());
+		if(usuario == null) {
+			throw new RuntimeException("Erro ao buscar usuário por email.");
+		}
+		
 		boolean passwordValid = compararPassword(request.getEmail(), request.getPassword());
 		if(!passwordValid) {
 			throw new RuntimeException("Senha inválida!");
 		}
 		
-		Usuario usuario = repository.findByEmail(request.getEmail());
 		request.setId(usuario.getId());
 		String token = jwtService.generateToken(request);
 		return new JwtResponse(usuario, token);
