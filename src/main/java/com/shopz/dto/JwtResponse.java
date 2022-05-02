@@ -1,5 +1,7 @@
 package com.shopz.dto;
 
+import com.shopz.entities.Usuario;
+
 public class JwtResponse {
 
 	private String cpf;
@@ -7,10 +9,10 @@ public class JwtResponse {
 	private String password;
 	private String token;
 	
-	public JwtResponse(String cpf, String email, String password, String token) {
-		this.cpf = cpf;
-		this.email = email;
-		this.password = password;
+	public JwtResponse(Usuario usuario, String token) {
+		this.cpf = usuario.getCpf();
+		this.email = usuario.getEmail();
+		this.password = usuario.getPassword();
 		this.token = token;
 	}
 
