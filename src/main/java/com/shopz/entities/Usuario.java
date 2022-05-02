@@ -61,6 +61,10 @@ public class Usuario {
 		}
 	}
 	
+	public void removeProdutosAll() {
+		produtos.clear();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,6 +79,10 @@ public class Usuario {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public List<Produto> getProdutos() {

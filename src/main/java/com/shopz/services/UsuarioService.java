@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopz.dto.ChangePasswordRequest;
 import com.shopz.entities.Produto;
 import com.shopz.entities.Usuario;
 import com.shopz.repositories.UsuarioRepository;
@@ -20,6 +21,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private ProdutoService produtoService;
+	
+	@Autowired
+	private AuthenticateService authenticateService;
 
 	public Usuario getUsuarioLogado(HttpServletRequest request) {
 		String token = jwtService.getTokenRequest(request);
@@ -27,9 +31,16 @@ public class UsuarioService {
 		return repository.findById(idUsuario).get();
 	}
 	
-	public void changePassword(HttpServletRequest request) {
+	public void changePassword(HttpServletRequest request, ChangePasswordRequest body) {
 		Usuario usuarioLogado = getUsuarioLogado(request);
+		boolean senhaValida = authenticateService.compararPassword(usuarioLogado.getEmail(), body.getSenhaAtual());
 		
+		if(!senhaValida) {
+			throw new RuntimeException("Senha inválida");
+		}
+		
+		authenticateService.changePassword(usuarioLogado, body.getSenhaNova());
+		repository.save(usuarioLogado);
 	}
 	
 	public Usuario insertProdutoById(HttpServletRequest request, Long idProduto) {
@@ -43,6 +54,12 @@ public class UsuarioService {
 		Produto produto = produtoService.findProdutoById(idProduto);
 		Usuario usuarioLogado = getUsuarioLogado(request);
 		usuarioLogado.removeProduto(produto);
+		return repository.save(usuarioLogado);
+	}
+	
+	public Usuario removeProdutosAll(HttpServletRequest request) {
+		Usuario usuarioLogado = getUsuarioLogado(request);
+		usuarioLogado.removeProdutosAll();
 		return repository.save(usuarioLogado);
 	}
 }

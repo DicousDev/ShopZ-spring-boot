@@ -57,5 +57,12 @@ public class AuthenticateService implements UserDetailsService {
 		return new JwtResponse(usuario.getCpf(), usuario.getEmail(), usuario.getPassword(), token);
 	}
 	
-
+	public boolean compararPassword(String email, String password) {
+		UserDetails userDetails = loadUserByUsername(email);
+		return passwordEncoder.matches(password, userDetails.getPassword());
+	}
+	
+	public void changePassword(Usuario usuario, String newPassword) {
+		usuario.setPassword(passwordEncoder.encode(newPassword));
+	}
 }
