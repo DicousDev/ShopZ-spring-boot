@@ -50,6 +50,17 @@ public class Usuario {
 		produtos.add(produto);
 	}
 	
+	public void removeProduto(Produto produto) {
+		
+		for(Produto p : produtos) {
+			
+			if(p.getId() == produto.getId()) {
+				produtos.remove(p);
+				break;
+			}
+		}
+	}
+	
 	public Long getId() {
 		return id;
 	}

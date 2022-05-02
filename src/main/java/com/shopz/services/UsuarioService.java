@@ -27,10 +27,22 @@ public class UsuarioService {
 		return repository.findById(idUsuario).get();
 	}
 	
+	public void changePassword(HttpServletRequest request) {
+		Usuario usuarioLogado = getUsuarioLogado(request);
+		
+	}
+	
 	public Usuario insertProdutoById(HttpServletRequest request, Long idProduto) {
 		Produto produto = produtoService.findProdutoById(idProduto);
 		Usuario usuarioLogado = getUsuarioLogado(request);
 		usuarioLogado.insertProduto(produto);
+		return repository.save(usuarioLogado);
+	}
+	
+	public Usuario removeProdutoById(HttpServletRequest request, Long idProduto) {
+		Produto produto = produtoService.findProdutoById(idProduto);
+		Usuario usuarioLogado = getUsuarioLogado(request);
+		usuarioLogado.removeProduto(produto);
 		return repository.save(usuarioLogado);
 	}
 }
