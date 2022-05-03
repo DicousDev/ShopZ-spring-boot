@@ -27,8 +27,15 @@ public class AuthenticateController {
 	@ApiOperation("Cria um novo usuário")
 	@PostMapping(value = "/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CreateUsuarioResponse create(@RequestBody CreateUsuarioRequest request) {
-		return service.create(request);
+	public ResponseEntity<?> create(@RequestBody CreateUsuarioRequest request) {
+		
+		try {
+			CreateUsuarioResponse response = service.create(request);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		}
+		catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		}
 	}
 	
 	@ApiOperation("Login de usuário")
@@ -37,7 +44,7 @@ public class AuthenticateController {
 		
 		try {
 			JwtResponse response = service.authenticate(request);
-			return ResponseEntity.status(HttpStatus.OK).body(response);					
+			return ResponseEntity.status(HttpStatus.OK).body(response);		
 		}
 		catch(RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);

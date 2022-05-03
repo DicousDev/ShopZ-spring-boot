@@ -37,6 +37,12 @@ public class AuthenticateService implements UserDetailsService {
 	}
 	
 	public CreateUsuarioResponse create(CreateUsuarioRequest request) {
+		
+		Usuario existeUsuario = repository.findByEmail(request.getEmail());
+		if(existeUsuario != null) {
+			throw new RuntimeException("O email já está em uso");
+		}
+		
 		request.setPassword(passwordEncoder.encode(request.getPassword()));
 		Usuario usuario = new Usuario(request);
 		Usuario salvo = repository.save(usuario);
