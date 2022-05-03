@@ -15,7 +15,7 @@ public class Produto {
 	private Long id;
 	private String titulo;
 	private Double precoAtual;
-	private Double parcelas;
+	private Integer parcelas;
 	
 	public Long getId() {
 		return id;
@@ -29,7 +29,7 @@ public class Produto {
 		return precoAtual;
 	}
 
-	public Double getParcelas() {
+	public Integer getParcelas() {
 		return parcelas;
 	}
 }
