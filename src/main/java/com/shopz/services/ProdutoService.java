@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopz.entities.Produto;
+import com.shopz.exceptions.NotFoundRuntimeException;
 import com.shopz.repositories.ProdutoRepository;
 
 @Service
@@ -23,7 +24,7 @@ public class ProdutoService {
 		Optional<Produto> produto = repository.findById(idProduto);
 		
 		if(produto.isEmpty()) {
-			throw new RuntimeException("Produto não encontrado");
+			throw new NotFoundRuntimeException("Produto não encontrado");
 		}
 		
 		return produto.get();

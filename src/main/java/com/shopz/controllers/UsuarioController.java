@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shopz.dto.ChangePasswordRequest;
 import com.shopz.entities.Usuario;
+import com.shopz.exceptions.NotFoundRuntimeException;
 import com.shopz.services.UsuarioService;
 
 @RestController
@@ -39,10 +40,10 @@ public class UsuarioController {
 		
 		try {
 			Usuario usuario = service.insertProdutoById(request, idProduto);
-			return ResponseEntity.status(HttpStatus.CREATED).body(usuario); 
+			return ResponseEntity.status(HttpStatus.OK).body(usuario); 
 		}
-		catch(RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e); 
+		catch(NotFoundRuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e); 
 		}
 	}
 	
@@ -53,8 +54,8 @@ public class UsuarioController {
 			Usuario usuario = service.removeProdutoById(request, idProduto);
 			return ResponseEntity.status(HttpStatus.OK).body(usuario);
 		}
-		catch(RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e); 
+		catch(NotFoundRuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
 		}
 	}
 	
