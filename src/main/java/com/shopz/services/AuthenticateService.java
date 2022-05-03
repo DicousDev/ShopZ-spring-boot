@@ -47,7 +47,7 @@ public class AuthenticateService implements UserDetailsService {
 		
 		Usuario usuario = repository.findByEmail(request.getEmail());
 		if(usuario == null) {
-			throw new RuntimeException("Erro ao buscar usuário por email.");
+			throw new RuntimeException("Erro ao buscar usuário por email");
 		}
 		
 		boolean passwordValid = compararPassword(request.getEmail(), request.getPassword());

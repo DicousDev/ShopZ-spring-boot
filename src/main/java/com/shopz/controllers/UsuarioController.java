@@ -3,6 +3,8 @@ package com.shopz.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +35,27 @@ public class UsuarioController {
 	}
 	
 	@PostMapping(value = "/produtos/{idProduto}")
-	public Usuario insertProduto(HttpServletRequest request, @PathVariable Long idProduto) {
-		return service.insertProdutoById(request, idProduto);
+	public ResponseEntity<?> insertProduto(HttpServletRequest request, @PathVariable Long idProduto) {
+		
+		try {
+			Usuario usuario = service.insertProdutoById(request, idProduto);
+			return ResponseEntity.status(HttpStatus.CREATED).body(usuario); 
+		}
+		catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e); 
+		}
 	}
 	
 	@DeleteMapping(value = "/produtos/{idProduto}")
-	public Usuario removeProduto(HttpServletRequest request, @PathVariable Long idProduto) {
-		return service.removeProdutoById(request, idProduto);
+	public ResponseEntity<?> removeProduto(HttpServletRequest request, @PathVariable Long idProduto) {
+		
+		try {
+			Usuario usuario = service.removeProdutoById(request, idProduto);
+			return ResponseEntity.status(HttpStatus.OK).body(usuario);
+		}
+		catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e); 
+		}
 	}
 	
 	@DeleteMapping(value = "/produtos")

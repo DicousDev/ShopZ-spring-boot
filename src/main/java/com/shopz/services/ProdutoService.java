@@ -1,6 +1,7 @@
 package com.shopz.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class ProdutoService {
 	}
 	
 	public Produto findProdutoById(Long idProduto) {
-		return repository.findById(idProduto).get();
+		Optional<Produto> produto = repository.findById(idProduto);
+		
+		if(produto.isEmpty()) {
+			throw new RuntimeException("Produto não encontrado");
+		}
+		
+		return produto.get();
 	}
 }
