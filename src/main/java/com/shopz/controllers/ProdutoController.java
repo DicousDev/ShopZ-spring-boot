@@ -21,7 +21,7 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService service;
 	
-	@ApiOperation(value = "Mostra lista de produtos")
+	@ApiOperation(value = "Obter produtos disponíveis")
 	@GetMapping
 	public List<Produto> findProdutosAll() {
 		return service.findProdutosAll();
